@@ -1,18 +1,23 @@
-# Use Node LTS
-FROM node:20
+# Usa uma imagem leve do Node.js
+FROM node:20-alpine
 
-# Cria diretório do app
+# Define o diretório de trabalho dentro do container
 WORKDIR /usr/src/app
 
-# Copia package.json e instala dependências
+# Copia apenas os arquivos de dependências primeiro (melhor cache)
 COPY package*.json ./
+
+# Instala as dependências
 RUN npm install
 
-# Copia todo o código
+# Copia o restante do código da aplicação
 COPY . .
 
-# Expõe a porta
+# Expõe a porta que sua aplicação usa
 EXPOSE 3000
 
-# Comando de inicialização
-CMD ["node", "app.js"]
+# Define variável de ambiente de produção
+ENV NODE_ENV=production
+
+# Comando para iniciar a aplicação
+CMD ["node", "src/server.js"]

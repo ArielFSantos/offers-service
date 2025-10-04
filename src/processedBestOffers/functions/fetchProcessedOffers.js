@@ -1,5 +1,5 @@
 // Função que busca todas as ofertas processadas relacionadas aos IDs dos endereços e aos critérios do filtro
-import ProcessedOffer from '../../../app/models/ProcessedOffer.js';
+import ProcessedOffer from '../../models/ProcessedOffer.js';
 
 export const fetchProcessedOffers = async (addressIds, validOffers, isBuyAddress) => {
   const addressFilter = isBuyAddress ? { to: { $in: addressIds } } : { from: { $in: addressIds } };

@@ -1,5 +1,5 @@
-import HttpError from "../../../app/models/HttpError";
-import Queue_bestOffersSchema from "../../../app/models/Queue_bestOffers";
+import HttpError from "../../models/HttpError.js";
+import Queue_bestOffersSchema from "../../models/Queue_bestOffers.js";
 
 export default async function getLastQueueLot(){
   try {

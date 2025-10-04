@@ -1,7 +1,7 @@
-import Parameter from "../../../app/models/Parameter.js";
-import Freight from "../../../app/models/Freight.js";
-import Taxes from "../../../app/models/Taxes.js";
-import FreightPercentage from "../../../app/models/FreightPercentage.js";
+import Parameter from "../../models/Parameter.js";
+import Freight from "../../models/Freight.js";
+import Taxes from "../../models/Taxes.js";
+import FreightPercentage from "../../models/FreightPercentage.js";
 
 export default async function getParameters() {
   let freights;

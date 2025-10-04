@@ -1,5 +1,5 @@
 import Mongoose from 'mongoose';
-import PointSchema from '../schema/PointSchema.js';
+import PointSchema from './PointSchema.js';
 
 const AddressSchema = new Mongoose.Schema(
   {

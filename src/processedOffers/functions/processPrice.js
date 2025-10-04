@@ -1,6 +1,12 @@
 import moment from 'moment';
-import { roundNumber } from '../../../app/utils/format';
 
+export const roundNumber = (value, decimalDigits = 2) =>
+  value && !Number.isNaN(value)
+    ? Math.round((Number(value) + Number.EPSILON) * 10 ** decimalDigits) /
+      10 ** decimalDigits
+    : 0;
+
+    
 export default function processPrice(
   distance,
   offer,

@@ -1,4 +1,4 @@
-import Queue_bestOffers from '../../../app/models/Queue_bestOffers';
+import Queue_bestOffers from '../../models/Queue_bestOffers.js';
 
 export default async function createQueuesByAddress(addresses, isBuyAddress, lastQueueLot) {
   let lotNumber = lastQueueLot || 0;

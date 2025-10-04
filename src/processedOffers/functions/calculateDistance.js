@@ -1,4 +1,4 @@
-import Queue_distances from "../../../app/models/Queue_distances";
+import Queue_distances from '../../models/Queue_distances.js';
 
 export default async function calculateDistance(from, to) {
   try {

@@ -1,5 +1,5 @@
 //Função que busca todas informações de graos do banco de dados
-import Grain from '../../../app/models/Grain';
+import Grain from '../../models/Grain.js';
 
 export const fetchGrains = async () => {
   try {

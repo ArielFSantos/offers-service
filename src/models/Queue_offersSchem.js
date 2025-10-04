@@ -21,4 +21,4 @@ const Queue_offersSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-module.exports = mongoose.model('QueueOffer', Queue_offersSchema, 'queue_offers');
+export default mongoose.model('QueueOffer', Queue_offersSchema, 'queue_offers');

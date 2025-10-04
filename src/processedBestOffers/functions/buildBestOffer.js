@@ -1,4 +1,9 @@
-import { getDeliveryFormatMonth } from '../../../app/utils/format';
+export const getDeliveryFormatMonth = deliveryDeadline => {
+  return deliveryDeadline === 'spot'
+    ? 'spot'
+    : moment(deliveryDeadline).format('MM/YYYY');
+}
+
 //Construção do objeto newBest
 export const buildBestOffer = (address, grains, processedOffers, isBuyAddress) => {
   const newBest = {
