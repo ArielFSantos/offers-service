@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "axios": "^1.12.2",
+    "cors": "^2.8.5",
+    "database": "^0.0.2",
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
+    "firebase-admin": "^13.5.0",
+    "mongoose": "^8.19.0"
+  },
+  "scripts": {
+    "start": "node src/app.js",
+    "build": "rm -rf dist && sucrase ./src -d ./dist --transforms imports",
+    "dev": "nodemon src/app.js",
+    "dev:debug": "nodemon --inspect src/app.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
