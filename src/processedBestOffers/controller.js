@@ -9,29 +9,78 @@ import getLastQueueLot from './functions/getLastQueue.js';
 import Address from '../models/Address.js';
 import createQueuesByAddress from './functions/createQueuesByAddress.js';
 
+
 // Classe do controlador
 class ProcessedBestOffersRPAController {
   async processBest(req, res, next) {
     let queueId;
 
     try {
-      const queue = await Queue_bestOffersSchema.findOneAndUpdate(
-        { processing: false },
-        { $set: { processing: true } },
-        { sort: { lot: 1, createdAt: 1, isBuyAddress: -1 }, new: true }
-      );
+      
+      const queue = await Queue_bestOffersSchema.aggregate([
+  // Filtra apenas queues não processadas
+  { $match: { processing: false } },
+
+  // Ordena pelo critério desejado
+  { $sort: { lot: 1, createdAt: 1, isBuyAddress: -1 } },
+
+  // Pega apenas o primeiro registro (equivalente ao findOne)
+  { $limit: 1 },
+
+  // Atualiza o campo 'processing' para true
+  {
+    $set: { processing: true },
+  },
+
+  // Lookup para addresses
+  {
+    $lookup: {
+      from: 'addresses',       // Nome da collection no MongoDB
+      localField: 'addresses', // Campo no Queue_bestOffers
+      foreignField: '_id',     // Campo no Address
+      as: 'addresses',
+    },
+  },
+
+  // Lookup para city dentro de addresses
+  {
+    $unwind: { path: '$addresses', preserveNullAndEmptyArrays: true },
+  },
+  {
+    $lookup: {
+      from: 'cities',           // Nome da collection de City
+      localField: 'addresses.city',
+      foreignField: '_id',
+      as: 'addresses.city',
+    },
+  },
+  {
+    $lookup: {
+      from: 'users',           // Nome da collection de User
+      localField: 'addresses.user',
+      foreignField: '_id',
+      as: 'addresses.user',
+    },
+  },
+  {
+    $group: {
+      _id: '$_id',
+      lot: { $first: '$lot' },
+      createdAt: { $first: '$createdAt' },
+      processing: { $first: '$processing' },
+      isBuyAddress: { $first: '$isBuyAddress' },
+      addresses: { $push: '$addresses' },
+    },
+  },
+]);
 
       if (!queue) {
         return res.json({ message: 'Sem lote para ser processado' });
       }
 
-      const { addresses, _id, isBuyAddress } = queue;
+      const { addresses, _id, isBuyAddress } = queue[0];
       queueId = _id;
 
-      await queue.populate({
-        path: 'addresses',
-        populate: 'city user'
-      }).execPopulate();
 
       const addressIds = addresses.map(address => address._id);
       const [grains, processedOffers] = await Promise.all([
