@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const getDeliveryFormatMonth = deliveryDeadline => {
   return deliveryDeadline === 'spot'
     ? 'spot'
